@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/clothes";
+const API_URL = "http://localhost:8080/api/clothes/allcloth";
 
 const HiddenNewArrival = () => {
     const [hiddenItems, setHiddenItems] = useState([]);
@@ -45,7 +45,7 @@ const HiddenNewArrival = () => {
                             <img
                                 src={item.imageUrl}
                                 alt={item.clothName}
-                                className="w-full h-48 object-cover"
+                                className="w-full h-100 object-cover"
                             />
                             <div className="p-4">
                                 <h3 className="font-bold text-lg">{item.clothName}</h3>
