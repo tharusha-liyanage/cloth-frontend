@@ -1,6 +1,10 @@
+import UserNewArrival from "./UserNewArrival";
+
 const NewArrival = () => {
     return (
-        <div> <h1>New Arrival</h1> </div>
+        <div> 
+        <UserNewArrival/>    
+        </div>
     );
 };
 export default NewArrival;
