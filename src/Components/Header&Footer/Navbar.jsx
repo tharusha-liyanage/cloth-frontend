@@ -52,10 +52,10 @@ const Navbar = () => {
     return (
         <>
             {/* Navbar */}
-            <nav className="fixed top-0 left-0 w-full z-50 bg-[#EAF4F6] shadow-md">
+            <nav className="fixed top-0 left-0 w-full z-50 bg-[#EBE8DB] shadow-md">
                 <div className="max-w-7xl mx-auto  py-3 flex justify-between items-center">
                     {/* Logo */}
-                    <Link to="/" className="text-2xl font-bold text-[#023545] tracking-wide">
+                    <Link to="/" className="text-2xl font-bold text-[#3D0301] tracking-wide">
                         Mahinda Trade Center
                     </Link>
 
@@ -67,8 +67,8 @@ const Navbar = () => {
                                 <Link
                                     key={link.name}
                                     to={link.path}
-                                    className={`flex items-center gap-1 font-medium text-[#023545] hover:text-indigo-600 transition ${
-                                        isActive ? "text-indigo-600" : ""
+                                    className={`flex items-center gap-1 font-medium text-[#3D0301] hover:text-[#B03052] transition ${
+                                        isActive ? "text-[#B03052]" : ""
                                     }`}
                                 >
                                     {link.icon}

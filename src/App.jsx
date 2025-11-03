@@ -15,7 +15,6 @@ import DisplayCloth from "./Pages/Admin/DisplayCloth.jsx";
 import UpdateCloth from "./Pages/Admin/UpdateCloth.jsx";
 import HiddenNewArrival from "./Pages/Admin/HiddenNewArrival";
 import NewArrivalAdmin from "./Pages/Admin/NewArrival.jsx";
-import UserNewArrival from './Pages/User/UserNewArrival.jsx';
 
 function App() {
 
@@ -36,7 +35,6 @@ function App() {
             <Route path="/updateCloth/:id" element={<UpdateCloth />} />
             <Route path="/hidden-items" element={<HiddenNewArrival />} />
             <Route path="/newArrivalAdmin" element={<NewArrivalAdmin />} />
-            <Route path="/userNewArrival" element={<UserNewArrival />} />
 
         </Routes>
     </>
