@@ -1,13 +1,17 @@
 // src/components/Auth/LoginModal.jsx
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export default function LoginModal({ isOpen, onClose }) {
+export default function LoginModal({ isOpen = true, onClose }) {
     const { login, refreshUser } = useAuth();
     const [credentials, setCredentials] = useState({ username: "", password: "" });
     const [loading, setLoading] = useState(false);
 
-    if (!isOpen) return null;
+    const navigate = useNavigate();
+
+    // If used as a modal, hide when isOpen is false
+    if (!isOpen && onClose) return null;
 
     const handleChange = (e) =>
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -15,27 +19,38 @@ export default function LoginModal({ isOpen, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
         const success = await login(credentials.username, credentials.password);
         setLoading(false);
 
         if (success) {
             await refreshUser();
-            alert("Login successful!");
-            onClose();
+            // Close modal if exists
+            if (onClose) onClose();
+            // Redirect to home page
+            navigate("/");
         } else {
             alert("Invalid username or password!");
         }
     };
 
+    // Determine wrapper: modal overlay if onClose exists
+    const Wrapper = onClose ? "div" : React.Fragment;
+    const wrapperProps = onClose
+        ? { className: "fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" }
+        : {};
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-2xl shadow-2xl w-96 p-6 relative">
-                <button
-                    onClick={onClose}
-                    className="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-xl"
-                >
-                    &times;
-                </button>
+        <Wrapper {...wrapperProps}>
+            <div className={`bg-white rounded-2xl shadow-2xl w-96 p-6 relative ${!onClose ? "mx-auto mt-24" : ""}`}>
+                {onClose && (
+                    <button
+                        onClick={onClose}
+                        className="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-xl"
+                    >
+                        &times;
+                    </button>
+                )}
 
                 <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
                     Login
@@ -69,6 +84,6 @@ export default function LoginModal({ isOpen, onClose }) {
                     </button>
                 </form>
             </div>
-        </div>
+        </Wrapper>
     );
 }

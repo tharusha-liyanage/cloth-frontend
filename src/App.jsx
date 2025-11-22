@@ -15,7 +15,11 @@ import DisplayCloth from "./Pages/Admin/DisplayCloth.jsx";
 import UpdateCloth from "./Pages/Admin/UpdateCloth.jsx";
 import HiddenNewArrival from "./Pages/Admin/HiddenNewArrival";
 import NewArrivalAdmin from "./Pages/Admin/NewArrival.jsx";
-
+import AdminCarousel from './Pages/Admin/AdminCarousel.jsx';
+import AddSlideModal from './Pages/Admin/AddSlideModal.jsx';
+import EditSlideModal from './Pages/Admin/EditSlideModal.jsx';
+import HomeCarousel from './Components/Home/HomeCarousel.jsx';
+import LoginModal from './Components/Auth/LoginModal.jsx';
 function App() {
 
   return (
@@ -35,7 +39,11 @@ function App() {
             <Route path="/updateCloth/:id" element={<UpdateCloth />} />
             <Route path="/hidden-items" element={<HiddenNewArrival />} />
             <Route path="/newArrivalAdmin" element={<NewArrivalAdmin />} />
-
+            <Route path="/adminCarousel" element={<AdminCarousel />} />
+            <Route path="/addSlideModal" element={<AddSlideModal />} />
+            <Route path="/editSlideModal/:id" element={<EditSlideModal />} />
+            <Route path="/homeCarousel" element={<HomeCarousel />} />
+            <Route path='/login' element={<LoginModal/>}/>
         </Routes>
     </>
 

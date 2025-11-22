@@ -27,6 +27,11 @@ const AdminPage = () => {
         navigate("/newArrivalAdmin"); //
     };
 
+    const handleCarousel = () => {
+        navigate("/adminCarousel"); //
+    };
+
+    
     return (
         <div>
             <Navbar/>
@@ -83,6 +88,13 @@ const AdminPage = () => {
                         className="bg-pink-600 text-white px-6 py-3 rounded-2xl hover:bg-pink-700 transition font-medium shadow-md"
                     >
                         Handle New Arrival
+                    </button>
+
+                    <button
+                        onClick={handleCarousel}
+                        className="bg-yellow-600 text-white px-6 py-3 rounded-2xl hover:bg-pink-700 transition font-medium shadow-md"
+                    >
+                        Handle Carousel
                     </button>
                 </div>
             </div>
