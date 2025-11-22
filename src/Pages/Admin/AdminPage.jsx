@@ -31,6 +31,10 @@ const AdminPage = () => {
         navigate("/adminCarousel"); //
     };
 
+    const handleOfferSection = () => {
+        navigate("/adminOfferSection"); 
+    };
+
     
     return (
         <div>
@@ -95,6 +99,13 @@ const AdminPage = () => {
                         className="bg-yellow-600 text-white px-6 py-3 rounded-2xl hover:bg-pink-700 transition font-medium shadow-md"
                     >
                         Handle Carousel
+                    </button>
+
+                    <button
+                        onClick={handleOfferSection}
+                        className="bg-blue-900 text-white px-6 py-3 rounded-2xl hover:bg-pink-700 transition font-medium shadow-md"
+                    >
+                        Add offer
                     </button>
                 </div>
             </div>

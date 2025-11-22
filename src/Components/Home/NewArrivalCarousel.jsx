@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight, ShoppingCart, EyeOff, Heart } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:8080/api/clothes/allcloth";
 
 const NewArrivalCarousel = () => {
@@ -13,6 +13,9 @@ const NewArrivalCarousel = () => {
     fetchClothes();
   }, []);
 
+  const handleNewArrivalpage = () => {
+        navigate("/newArrival"); 
+    };
   const fetchClothes = async () => {
     try {
       setLoading(true);
@@ -48,7 +51,7 @@ const NewArrivalCarousel = () => {
   };
 
   return (
-    <section className="py-12 bg-gray-50 relative group/section">
+    <section className="py-10 bg-gray-50 relative group/section -mb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="flex justify-between items-end mb-8  ">
@@ -138,6 +141,31 @@ const NewArrivalCarousel = () => {
              <div className="w-full text-center py-10 text-gray-500">No new arrivals found.</div>
           )}
         </div>
+        <div className="flex flex-col items-center justify-center text-center py-10 px-4 md:py-16">
+    
+    {/* Headline Text */}
+    <p className="text-2xl md:text-3xl font-light text-gray-800 leading-relaxed mb-6">
+        Discover the newest collection,<br/>designed to keep your style up to date
+    </p>
+
+    {/* Button */}
+    <button
+        onClick={handleNewArrivalpage}
+        className="
+            bg-[#604a03ff] text-white 
+            px-8 py-3 
+            rounded-full               
+            hover:bg-[#816404ff] 
+            transition duration-300    
+            font-semibold              
+            shadow-xl                  
+            tracking-wide             
+        "
+    >
+        Explore more
+    </button>
+</div>
+
       </div>
     </section>
   );
