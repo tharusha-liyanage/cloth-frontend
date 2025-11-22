@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@keyframes typing {
+  /* Text appears */
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes reset-cursor {
+  /* Custom keyframe to hide the cursor briefly at the end of the typing cycle */
+  0%, 90% { border-color: transparent }
+  100% { border-color: white } 
+}
+
+.typing-animation {
+  overflow: hidden; 
+  border-right: .15em solid white; 
+  white-space: nowrap; 
+  letter-spacing: .05em;
+  display: inline-block; 
+}
