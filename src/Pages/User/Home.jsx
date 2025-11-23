@@ -1,3 +1,4 @@
+import Footer from "../../Components/Header&Footer/Footer.jsx";
 import Navbar from "../../Components/Header&Footer/Navbar.jsx";
 import AboutUs from "../../Components/Home/AboutUs.jsx";
 import Collection from "../../Components/Home/Collection.jsx";
@@ -15,6 +16,7 @@ function Home() {
             <Collection/>
             <OfferBanner/>
             <AboutUs/>
+            <Footer/>
         </>
     )
 };
