@@ -21,6 +21,7 @@ import EditSlideModal from './Pages/Admin/EditSlideModal.jsx';
 import HomeCarousel from './Components/Home/HomeCarousel.jsx';
 import LoginModal from './Components/Auth/LoginModal.jsx';
 import AdminOfferSection from './Pages/Admin/AdminOfferSection.jsx';
+import ProductDetails from './Components/Common/ProductDetails.jsx';
 function App() {
 
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="/homeCarousel" element={<HomeCarousel />} />
             <Route path='/login' element={<LoginModal/>}/>
             <Route path='/adminOfferSection'element={<AdminOfferSection/>}/>
+            <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
     </>
 
