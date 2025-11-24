@@ -39,7 +39,7 @@ const NewArrival = () => {
                 {clothes.map((item) => (
                     <Card
                         key={item.id}
-                        id={cloth.id}  
+                        id={item.id}  
                         imageUrl={item.imageUrl}
                         title={item.clothName}
                         price={item.price}
