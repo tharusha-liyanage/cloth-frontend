@@ -2,12 +2,16 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, UserRound } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
-
+import { useCart } from "../../contexts/CartContext";
+import { ShoppingCart } from "lucide-react"; 
+import CartSidebar from "../Cart/CartSidebar.jsx";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { itemCount } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -71,6 +75,17 @@ const Navbar = () => {
                 <UserRound size={18} />
                 {user.username}
               </button>
+              <button
+  onClick={() => setCartOpen(true)}
+  className="relative bg-white border px-3 py-2 rounded-md hover:bg-gray-50"
+>
+  <ShoppingCart size={18} />
+  <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 grid place-items-center">
+    {itemCount}
+  </span>
+</button>
+
+<CartSidebar open={cartOpen} onClose={() => setCartOpen(false)} onViewCart={() => { setCartOpen(false); navigate("/cart"); }} />
               <button
                 onClick={handleLogout}
                 className="bg-[#604a03ff] text-white px-4 py-2 rounded-2xl hover:opacity-90 transition"
