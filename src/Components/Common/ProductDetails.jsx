@@ -1,8 +1,8 @@
+// src/Pages/ProductDetails.jsx (update your existing file)
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../Header&Footer/Navbar";
-import Footer from "../Header&Footer/Footer";
+import { useCart } from "../../contexts/CartContext";
 
 const API_URL = "http://localhost:8080/api/clothes/id/";
 
@@ -147,7 +147,16 @@ const ProductDetails = () => {
             </div>
         <Footer/>
         </div>
-    );
+
+        {/* small feedback */}
+        {showMiniCart && (
+          <div className="mt-3 text-sm text-green-700">
+            Added to cart — <button onClick={() => navigate("/cart")} className="underline">View cart</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ProductDetails;

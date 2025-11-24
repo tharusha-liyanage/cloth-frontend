@@ -22,6 +22,7 @@ import HomeCarousel from './Components/Home/HomeCarousel.jsx';
 import LoginModal from './Components/Auth/LoginModal.jsx';
 import AdminOfferSection from './Pages/Admin/AdminOfferSection.jsx';
 import ProductDetails from './Components/Common/ProductDetails.jsx';
+import CartPage from './Pages/User/CartPage.jsx';
 function App() {
 
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path='/login' element={<LoginModal/>}/>
             <Route path='/adminOfferSection'element={<AdminOfferSection/>}/>
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<CartPage />} />
         </Routes>
     </>
 
