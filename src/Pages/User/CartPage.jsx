@@ -1,12 +1,16 @@
 // src/Pages/CartPage.jsx
 import React from "react";
 import { useCart } from "../../contexts/CartContext";
+import Navbar from "../../Components/Header&Footer/Navbar";
+import Footer from "../../Components/Header&Footer/Footer";
 
 const CartPage = () => {
   const { items, updateQty, removeItem, subtotal } = useCart();
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
+    <div>
+      <Navbar />
+    <div className="max-w-6xl mx-auto p-20">
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
 
       {items.length === 0 ? (
@@ -56,6 +60,8 @@ const CartPage = () => {
           </div>
         </>
       )}
+    </div>
+    <Footer/>
     </div>
   );
 };
