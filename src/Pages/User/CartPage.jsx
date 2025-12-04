@@ -3,9 +3,15 @@ import React from "react";
 import { useCart } from "../../contexts/CartContext";
 import Navbar from "../../Components/Header&Footer/Navbar";
 import Footer from "../../Components/Header&Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const { items, updateQty, removeItem, subtotal } = useCart();
+    const navigate = useNavigate();
+
+const handlePayment = () => {
+        navigate("/payment"); //
+    };
 
   return (
     <div>
@@ -55,7 +61,8 @@ const CartPage = () => {
                 <span className="text-gray-600">Subtotal</span>
                 <span className="font-bold">Rs {subtotal.toLocaleString()}</span>
               </div>
-              <button className="w-full bg-[#023545] text-white py-3 rounded">Proceed to Checkout</button>
+              <button onClick={handlePayment}
+               className="w-full bg-[#023545] text-white py-3 rounded">Proceed to Checkout</button>
             </div>
           </div>
         </>
