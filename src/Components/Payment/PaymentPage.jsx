@@ -14,7 +14,7 @@ const PaymentPage = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
-  const { items, subtotal } = useCart();
+  const { items, subtotal, clearCart } = useCart();
   const { token } = useAuth();
   const navigate = useNavigate();
 
@@ -56,11 +56,32 @@ const PaymentPage = () => {
     }
   };
 
-  const handlePaymentSuccess = () => {
-    alert("Payment Successful!");
+  const handlePaymentSuccess = async (paymentIntentId) => {
+  try {
+    // 1️⃣ Create Order in backend
+    const res = await axios.post(
+      "http://localhost:8080/api/orders/create",
+      { paymentIntentId },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    // 2️⃣ Clear local frontend cart
+    clearCart(); // ← from your CartContext
+
+    // 3️⃣ Close modal
     setPaymentModalOpen(false);
-    // Add logic here to clear cart and save order to database
-  };
+
+    alert("Order created successfully!");
+
+
+  } catch (error) {
+    console.error("Order creation failed:", error);
+    alert("Payment succeeded but failed to create order. Contact support!");
+  }
+};
+
 
   const handleBackToCart = () => {
     navigate("/cart");
@@ -314,6 +335,7 @@ const PaymentPage = () => {
           <StripePaymentModal 
             clientSecret={clientSecret} 
             amount={subtotal}
+            token={token}
             onClose={() => setPaymentModalOpen(false)}
             onSuccess={handlePaymentSuccess}
           />

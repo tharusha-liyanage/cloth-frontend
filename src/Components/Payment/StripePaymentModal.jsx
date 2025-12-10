@@ -69,7 +69,7 @@ const CheckoutForm = ({ onSuccess, amount }) => {
       <button 
         disabled={!stripe || loading} 
         type="submit"
-        className="w-full bg-[#023545] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#022a36] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-md"
+        className="w-full bg-[#453d02ff] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#443102ff] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-md"
       >
         {loading ? <Loader2 className="animate-spin" size={20} /> : `Pay LKR ${amount.toLocaleString()}`} 
       </button>
@@ -78,7 +78,7 @@ const CheckoutForm = ({ onSuccess, amount }) => {
 };
 
 // --- Main Component: The Modal Wrapper ---
-const StripePaymentModal = ({ clientSecret, onClose, onSuccess, amount }) => {
+const StripePaymentModal = ({ clientSecret, onClose, onSuccess, amount, token  }) => {
   
   // 1. If clientSecret is missing, we cannot load the form.
   if (!clientSecret) {
