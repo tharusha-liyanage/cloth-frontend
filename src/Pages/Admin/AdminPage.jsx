@@ -6,7 +6,7 @@ import Navbar from "../../Components/Header&Footer/Navbar.jsx";
 const ActionCard = ({ title, subtitle, onClick, iconBg = "bg-[#f6f2ea]", icon }) => (
     <div
         onClick={onClick}
-        className="cursor-pointer bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-200"
+        className="cursor-pointer bg-white backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:bg-white/40 transform hover:-translate-y-2 transition duration-300 border border-white/40"
     >
         <div className="flex items-start gap-4">
             <div className={`w-12 h-12 flex items-center justify-center rounded-lg ${iconBg}`}>

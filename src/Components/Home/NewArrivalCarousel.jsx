@@ -16,6 +16,8 @@ const NewArrivalCarousel = () => {
   const handleNewArrivalpage = () => {
         navigate("/newArrival"); 
     };
+
+  const navigate = useNavigate();
   const fetchClothes = async () => {
     try {
       setLoading(true);
@@ -113,12 +115,12 @@ const NewArrivalCarousel = () => {
 
                   {/* Hover Overlay Actions */}
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 translate-y-20 group-hover:translate-y-0 transition-transform duration-500 px-4">
-                    <button className="flex-1 bg-white text-black py-2.5 rounded-lg text-sm font-semibold shadow-lg hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2">
+                    <button onClick={() => navigate(`/product/${id}`)}
+
+                     className="flex-1 bg-white text-black py-2.5 rounded-lg text-sm font-semibold shadow-lg hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2">
                       <ShoppingCart size={18} /> Add to Cart
                     </button>
-                    <button className="p-2.5 bg-white text-black rounded-lg shadow-lg hover:text-red-500 transition-colors">
-                      <Heart size={20} />
-                    </button>
+                  
                   </div>
                 </div>
 
