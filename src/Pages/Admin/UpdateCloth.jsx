@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import Navbar from "../../Components/Header&Footer/Navbar.jsx";
+import Footer from "../../Components/Header&Footer/Footer.jsx";
 
 const API_BASE = "http://localhost:8080/api/clothes";
 
@@ -87,135 +90,157 @@ const UpdateCloth = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-[#EAF4F6] p-6">
-            <form
-                onSubmit={handleSubmit}
-                className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl"
-            >
-                <h2 className="text-2xl font-bold text-center text-[#023545] mb-6">
-                    Update Cloth
-                </h2>
-
-                {/* Cloth Name */}
-                <div className="mb-4">
-                    <label className="block text-[#023545] font-medium mb-2">
-                        Cloth Name
-                    </label>
-                    <input
-                        type="text"
-                        value={clothName}
-                        onChange={(e) => setClothName(e.target.value)}
-                        required
-                        className="w-full border border-gray-300 rounded-lg p-2"
-                    />
-                </div>
-
-                {/* Price */}
-                <div className="mb-4">
-                    <label className="block text-[#023545] font-medium mb-2">
-                        Price
-                    </label>
-                    <input
-                        type="number"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        required
-                        className="w-full border border-gray-300 rounded-lg p-2"
-                    />
-                </div>
-
-                {/* Cloth Type */}
-                <div className="mb-4">
-                    <label className="block text-[#023545] font-medium mb-2">
-                        Cloth Type
-                    </label>
-                    <select
-                        value={clothType}
-                        onChange={(e) => setClothType(e.target.value)}
-                        required
-                        className="w-full border border-gray-300 rounded-lg p-2"
+        <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#f6f2ea]/50 via-[#EAF4F6]/50 to-[#f6f2ea]/50">
+            <Navbar />
+            
+            <div className="flex-1 pt-28 pb-12 px-6">
+                <div className="max-w-2xl mx-auto">
+                    {/* Back Button */}
+                    <button
+                        onClick={() => navigate("/displayCloth")}
+                        className="flex items-center gap-2 text-[#604a03ff] font-semibold mb-6 hover:text-[#af8314ff] transition"
                     >
-                        <option value="">Select Type</option>
-                        <option value="denim">Denim</option>
-                        <option value="officeWear">Office Wear</option>
-                        <option value="frock">Frock</option>
-                        <option value="newArrival">New Arrival</option>
-                        <option value="topWear">Top Wear</option>
-                    </select>
-                </div>
+                        <ArrowLeft size={20} />
+                        Back to Inventory
+                    </button>
 
-                {/* Sizes */}
-                <div className="mb-4">
-                    <label className="block text-[#023545] font-medium mb-2">
-                        Available Sizes
-                    </label>
-                    <div className="flex flex-wrap gap-4">
-                        {allSizes.map((size) => (
-                            <label key={size} className="flex items-center gap-2">
-                                <input
-                                    type="checkbox"
-                                    checked={sizes.includes(size)}
-                                    onChange={() => handleSizeChange(size)}
-                                />
-                                {size}
+                    {/* Form Card */}
+                    <form
+                        onSubmit={handleSubmit}
+                        className="bg-white/30 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-lg"
+                    >
+                        <h2 className="text-3xl font-bold text-center text-[#604a03ff] mb-8">
+                            Update Cloth Details
+                        </h2>
+
+                        {/* Cloth Name */}
+                        <div className="mb-6">
+                            <label className="block text-[#604a03ff] font-semibold mb-2">
+                                Cloth Name
                             </label>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Stock Count */}
-                <div className="mb-4">
-                    <label className="block text-[#023545] font-medium mb-2">
-                        Stock Count (per size)
-                    </label>
-                    <div className="grid grid-cols-3 gap-3">
-                        {allSizes.map((size) => (
                             <input
-                                key={size}
-                                type="number"
-                                placeholder={`${size} count`}
-                                value={stockCount[size] || ""}
-                                onChange={(e) =>
-                                    setStockCount({ ...stockCount, [size]: e.target.value })
-                                }
-                                className="border border-gray-300 rounded-lg p-2"
+                                type="text"
+                                value={clothName}
+                                onChange={(e) => setClothName(e.target.value)}
+                                required
+                                className="w-full bg-white/50 border border-white/60 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#604a03ff] focus:bg-white transition"
                             />
-                        ))}
-                    </div>
-                </div>
+                        </div>
 
-                {/* Image Upload */}
-                <div className="mb-4">
-                    <label className="block text-[#023545] font-medium mb-2">
-                        Upload New Image (optional)
-                    </label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                            setImage(e.target.files[0]);
-                            setPreview(URL.createObjectURL(e.target.files[0]));
-                        }}
-                        className="w-full border border-gray-300 rounded-lg p-2 bg-white"
-                    />
-                    {preview && (
-                        <img
-                            src={preview}
-                            alt="Preview"
-                            className="mt-3 w-40 h-40 object-cover rounded-lg"
-                        />
-                    )}
-                </div>
+                        {/* Price */}
+                        <div className="mb-6">
+                            <label className="block text-[#604a03ff] font-semibold mb-2">
+                                Price
+                            </label>
+                            <input
+                                type="number"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                                required
+                                className="w-full bg-white/50 border border-white/60 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#604a03ff] focus:bg-white transition"
+                            />
+                        </div>
 
-                {/* Submit Button */}
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-[#023545] text-white font-semibold py-2.5 rounded-lg hover:bg-indigo-700 transition"
-                >
-                    {loading ? "Updating..." : "Update Cloth"}
-                </button>
-            </form>
+                        {/* Cloth Type */}
+                        <div className="mb-6">
+                            <label className="block text-[#604a03ff] font-semibold mb-2">
+                                Cloth Type
+                            </label>
+                            <select
+                                value={clothType}
+                                onChange={(e) => setClothType(e.target.value)}
+                                required
+                                className="w-full bg-white/50 border border-white/60 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#604a03ff] focus:bg-white transition"
+                            >
+                                <option value="">Select Type</option>
+                                <option value="denim">Denim</option>
+                                <option value="officeWear">Office Wear</option>
+                                <option value="frock">Frock</option>
+                                <option value="newArrival">New Arrival</option>
+                                <option value="topWear">Top Wear</option>
+                            </select>
+                        </div>
+
+                        {/* Sizes */}
+                        <div className="mb-6">
+                            <label className="block text-[#604a03ff] font-semibold mb-3">
+                                Available Sizes
+                            </label>
+                            <div className="flex flex-wrap gap-4">
+                                {allSizes.map((size) => (
+                                    <label key={size} className="flex items-center gap-2 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={sizes.includes(size)}
+                                            onChange={() => handleSizeChange(size)}
+                                            className="w-5 h-5 rounded accent-[#604a03ff]"
+                                        />
+                                        <span className="font-medium text-gray-700">{size}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Stock Count */}
+                        <div className="mb-6">
+                            <label className="block text-[#604a03ff] font-semibold mb-3">
+                                Stock Count (per size)
+                            </label>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                {allSizes.map((size) => (
+                                    <input
+                                        key={size}
+                                        type="number"
+                                        placeholder={`${size} count`}
+                                        value={stockCount[size] || ""}
+                                        onChange={(e) =>
+                                            setStockCount({ ...stockCount, [size]: e.target.value })
+                                        }
+                                        className="w-full bg-white/50 border border-white/60 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#604a03ff] focus:bg-white transition text-sm"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Image Upload */}
+                        <div className="mb-8">
+                            <label className="block text-[#604a03ff] font-semibold mb-2">
+                                Upload New Image (optional)
+                            </label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    setImage(e.target.files[0]);
+                                    setPreview(URL.createObjectURL(e.target.files[0]));
+                                }}
+                                className="w-full bg-white/50 border border-white/60 border-dashed rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-[#604a03ff] transition"
+                            />
+                            {preview && (
+                                <div className="mt-4">
+                                    <p className="text-sm text-gray-600 font-semibold mb-2">Preview:</p>
+                                    <img
+                                        src={preview}
+                                        alt="Preview"
+                                        className="w-40 h-40 object-cover rounded-lg border-2 border-white/60 shadow-md"
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Submit Button */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full bg-gradient-to-r from-[#604a03ff] to-[#af8314ff] text-white font-semibold py-3 rounded-lg hover:opacity-95 transition disabled:opacity-60 shadow-lg"
+                        >
+                            {loading ? "Updating..." : "Update Cloth"}
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <Footer />
         </div>
     );
 };

@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Header&Footer/Navbar.jsx";
+import Footer from "../Header&Footer/Footer.jsx";
 
 export default function LoginModal({ isOpen = true, onClose }) {
     const { login, refreshUser } = useAuth();
@@ -9,9 +11,10 @@ export default function LoginModal({ isOpen = true, onClose }) {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const isStandalone = onClose === undefined; // when used as a routed page
 
     // If used as a modal, hide when isOpen is false
-    if (!isOpen && onClose) return null;
+    if (!isStandalone && !isOpen) return null;
 
     const handleChange = (e) =>
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -34,56 +37,73 @@ export default function LoginModal({ isOpen = true, onClose }) {
         }
     };
 
-    // Determine wrapper: modal overlay if onClose exists
-    const Wrapper = onClose ? "div" : React.Fragment;
-    const wrapperProps = onClose
-        ? { className: "fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" }
-        : {};
+    const content = (
+        <div className={`bg-white rounded-2xl shadow-2xl w-96 p-6 relative ${isStandalone ? "mx-auto" : ""}`}>
+            {!isStandalone && onClose && (
+                <button
+                    onClick={onClose}
+                    className="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-xl"
+                >
+                    &times;
+                </button>
+            )}
 
-    return (
-        <Wrapper {...wrapperProps}>
-            <div className={`bg-white rounded-2xl shadow-2xl w-96 p-6 relative ${!onClose ? "mx-auto mt-24" : ""}`}>
-                {onClose && (
-                    <button
-                        onClick={onClose}
-                        className="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-xl"
-                    >
-                        &times;
-                    </button>
-                )}
+            <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h2>
 
-                <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
-                    Login
-                </h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={credentials.username}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 bg-white/60 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#604a03ff]"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={credentials.password}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 bg-white/60 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#604a03ff]"
+                />
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-3 bg-gradient-to-r from-[#604a03ff] to-[#af8314ff] text-white font-semibold rounded-lg hover:opacity-90 transition disabled:opacity-50"
+                >
+                    {loading ? "Logging in..." : "LOGIN"}
+                </button>
+            </form>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={credentials.username}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={credentials.password}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition disabled:opacity-50"
-                    >
-                        {loading ? "Logging in..." : "LOGIN"}
-                    </button>
-                </form>
+            <p className="text-sm text-center text-gray-600 mt-4">
+                Don't have an account? <button onClick={() => navigate("/signup")} className="text-[#604a03ff] font-semibold">Sign up</button>
+            </p>
+        </div>
+    );
+
+    if (isStandalone) {
+        return (
+            <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#f6f2ea]/40 via-[#EAF4F6]/40 to-[#f6f2ea]/40">
+                <Navbar />
+
+                <main className="flex-1 flex items-center justify-center px-6 py-12 mt-15">
+                    <div className="w-full max-w-md bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl p-8 shadow-lg">
+                        {content}
+                    </div>
+                </main>
+
+                <Footer />
             </div>
-        </Wrapper>
+        );
+    }
+
+    // Render as modal overlay when used as a modal
+    return (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            {content}
+        </div>
     );
 }

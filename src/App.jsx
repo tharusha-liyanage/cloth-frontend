@@ -25,6 +25,7 @@ import ProductDetails from './Components/Common/ProductDetails.jsx';
 import CartPage from './Pages/User/CartPage.jsx';
 import PaymentPage from './Components/Payment/PaymentPage.jsx';
 import OrderDetails from './Pages/Admin/OrderDetails.jsx';
+import SignupModal from './Components/Auth/SignupModal.jsx';
 function App() {
 
   return (
@@ -54,6 +55,7 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/orderDetails" element={<OrderDetails />} />
+            <Route path="/signup" element={<SignupModal />} />
         </Routes>
     </>
 

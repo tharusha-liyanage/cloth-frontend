@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import Navbar from "../../Components/Header&Footer/Navbar.jsx";
 
 export default function UserDetails() {
@@ -7,6 +9,7 @@ export default function UserDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editingRole, setEditingRole] = useState({}); // track role changes
+    const navigate = useNavigate();
 
     const fetchUsers = async () => {
         try {
@@ -74,106 +77,129 @@ export default function UserDetails() {
 
     if (loading)
         return (
-            <div className="flex justify-center items-center h-screen text-lg text-gray-700">
-                Loading user data...
+            <div className="flex justify-center items-center h-screen text-lg text-[#604a03ff]">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#604a03ff] mx-auto mb-4"></div>
+                    Loading user data...
+                </div>
             </div>
         );
 
     if (error)
         return (
             <div className="flex justify-center items-center h-screen text-red-500">
-                {error}
+                <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 border border-white/40">
+                    {error}
+                </div>
             </div>
         );
 
     return (
         <div>
             <Navbar />
-            <div className="p-8 bg-gray-50 min-h-screen mt-17">
-                <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-2xl p-6">
-                    <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">
-                        User Details
-                    </h1>
+            <div className="p-8 bg-gradient-to-br from-[#f6f2ea]/50 via-[#EAF4F6]/50 to-[#f6f2ea]/50 min-h-screen mt-17">
+                <div className="max-w-6xl mx-auto">
+                    {/* Back Button */}
+                    <button
+                        onClick={() => navigate("/adminPage")}
+                        className="flex items-center gap-2 text-[#604a03ff] font-semibold mb-6 hover:text-[#af8314ff] transition"
+                    >
+                        <ArrowLeft size={20} />
+                        Back to Admin
+                    </button>
 
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full border border-gray-200">
-                            <thead className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-sm font-semibold">#</th>
-                                <th className="px-6 py-3 text-left text-sm font-semibold">
-                                    Username
-                                </th>
-                                <th className="px-6 py-3 text-left text-sm font-semibold">
-                                    Email
-                                </th>
-                                <th className="px-6 py-3 text-left text-sm font-semibold">
-                                    Role
-                                </th>
-                                <th className="px-6 py-3 text-center text-sm font-semibold">
-                                    Actions
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {users.length > 0 ? (
-                                users.map((user, index) => (
-                                    <tr
-                                        key={user.id || index}
-                                        className="border-b hover:bg-gray-100 transition"
-                                    >
-                                        <td className="px-6 py-3 text-sm text-gray-700">
-                                            {index + 1}
-                                        </td>
-                                        <td className="px-6 py-3 text-sm text-gray-800 font-medium">
-                                            {user.username}
-                                        </td>
-                                        <td className="px-6 py-3 text-sm text-gray-700">
-                                            {user.email}
-                                        </td>
-                                        <td className="px-6 py-3 text-sm text-gray-700">
-                                            <select
-                                                value={editingRole[user.id] || user.role}
-                                                onChange={(e) =>
-                                                    handleRoleChange(user.id, e.target.value)
-                                                }
-                                                className={`border rounded-lg p-1 focus:ring-2 ${
-                                                    user.role === "ADMIN"
-                                                        ? "border-red-400 text-red-600"
-                                                        : "border-green-400 text-green-600"
-                                                }`}
-                                            >
-                                                <option value="USER">USER</option>
-                                                <option value="ADMIN">ADMIN</option>
-                                            </select>
-                                        </td>
-                                        <td className="px-6 py-3 text-center space-x-2">
-                                            <button
-                                                onClick={() => handleUpdateRole(user.id)}
-                                                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                                            >
-                                                Update Role
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(user.id, user.username)}
-                                                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                                            >
-                                                Delete
-                                            </button>
-                                        </td>
+                    {/* Header Card */}
+                    <div className="bg-white/30 backdrop-blur-md rounded-3xl p-8 mb-8 border border-white/40 shadow-lg">
+                        <h1 className="text-4xl font-bold text-center text-[#604a03ff]">
+                            Manage Users
+                        </h1>
+                        <p className="text-center text-gray-600 mt-2">
+                            View, edit roles, and manage registered users
+                        </p>
+                    </div>
+
+                    {/* Table Card */}
+                    <div className="bg-white/30 backdrop-blur-md rounded-3xl p-6 border border-white/40 shadow-lg overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full">
+                                <thead>
+                                    <tr className="bg-gradient-to-r from-[#604a03ff]/80 to-[#af8314ff]/80 text-white">
+                                        <th className="px-6 py-4 text-left text-sm font-semibold">#</th>
+                                        <th className="px-6 py-4 text-left text-sm font-semibold">
+                                            Username
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-sm font-semibold">
+                                            Email
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-sm font-semibold">
+                                            User Role
+                                        </th>
+                                        <th className="px-6 py-4 text-center text-sm font-semibold">
+                                            Actions
+                                        </th>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td
-                                        colSpan="5"
-                                        className="text-center py-6 text-gray-500 italic"
-                                    >
-                                        No users found.
-                                    </td>
-                                </tr>
-                            )}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {users.length > 0 ? (
+                                        users.map((user, index) => (
+                                            <tr
+                                                key={user.id || index}
+                                                className="border-b border-white/30 hover:bg-white/20 transition duration-200"
+                                            >
+                                                <td className="px-6 py-4 text-sm text-gray-800 font-medium">
+                                                    {index + 1}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-800 font-medium">
+                                                    {user.username}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-700">
+                                                    {user.email}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm">
+                                                    <select
+                                                        value={editingRole[user.id] || user.role}
+                                                        onChange={(e) =>
+                                                            handleRoleChange(user.id, e.target.value)
+                                                        }
+                                                        className={`px-3 py-2 rounded-lg bg-white/80 backdrop-blur-sm border-2 font-semibold focus:outline-none focus:ring-2 transition ${
+                                                            (editingRole[user.id] || user.role) === "ADMIN"
+                                                                ? "border-red-400 text-red-600 focus:ring-red-300"
+                                                                : "border-green-400 text-green-600 focus:ring-green-300"
+                                                        }`}
+                                                    >
+                                                        <option value="USER">USER</option>
+                                                        <option value="ADMIN">ADMIN</option>
+                                                    </select>
+                                                </td>
+                                                <td className="px-6 py-4 text-center space-x-2">
+                                                    <button
+                                                        onClick={() => handleUpdateRole(user.id)}
+                                                        className="px-4 py-2 bg-[#604a03ff] text-white rounded-lg hover:bg-[#af8314ff] transition duration-200 font-medium shadow-md"
+                                                    >
+                                                        Update Role
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(user.id, user.username)}
+                                                        className="px-4 py-2 bg-[#960404ff] text-white rounded-lg hover:bg-red-600 transition duration-200 font-medium shadow-md"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan="5"
+                                                className="text-center py-8 text-gray-500 italic"
+                                            >
+                                                No users found.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
