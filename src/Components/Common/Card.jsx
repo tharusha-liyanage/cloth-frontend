@@ -8,7 +8,7 @@ const Card = ({ id, imageUrl, title, price, sizes = [] }) => {
     return (
         <div
             onClick={() => navigate(`/product/${id}`)}
-            className="w-72 bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer"
+            className="w-full sm:w-80 md:w-72 lg:w-64 xl:w-72 bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer mx-auto"
         >
             <span className="absolute top-3 left-3 bg-teal-600 text-white text-sm px-3 py-1 rounded">
                 In stock

@@ -55,7 +55,7 @@ const HiddenNewArrival = () => {
                         <div className="flex items-center justify-between">
                             <div>
                                 <h2 className="text-4xl font-bold text-[#604a03ff]">
-                                    Manage Hidden Items
+                                    Manage Hidden Items for New Arrivals
                                 </h2>
                                 <p className="text-gray-600 mt-2">
                                     Restore hidden new arrival items back to the catalog

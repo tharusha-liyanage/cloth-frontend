@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import Navbar from "../../Components/Header&Footer/Navbar.jsx";
 import Footer from "../../Components/Header&Footer/Footer.jsx";
 
 const API_URL = "http://localhost:8080/api/orders/all";
 
-const AdminOrderDetails = () => {
+const OrderDetails = () => {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [expandedOrder, setExpandedOrder] = useState(null);
@@ -29,6 +29,19 @@ const AdminOrderDetails = () => {
         setExpandedOrder(expandedOrder === orderId ? null : orderId);
     };
 
+    // ✅ DELETE ORDER (NEW)
+    const handleDelete = async (orderId) => {
+        if (!window.confirm(`Are you sure you want to delete Order #${orderId}?`)) return;
+
+        try {
+            await axios.delete(`http://localhost:8080/api/orders/delete/${orderId}`);
+            loadOrders(); // refresh list
+        } catch (err) {
+            console.error("Failed to delete order:", err);
+            alert("Failed to delete order");
+        }
+    };
+
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#f6f2ea]/40 via-[#EAF4F6]/40 to-[#f6f2ea]/40">
             <Navbar />
@@ -48,6 +61,7 @@ const AdminOrderDetails = () => {
                         All Orders
                     </h1>
                 </div>
+
                 {orders.length === 0 ? (
                     <div className="bg-white/30 backdrop-blur-md border border-white/30 rounded-2xl p-12 text-center">
                         <p className="text-lg font-semibold text-[#604a03ff]">No orders yet</p>
@@ -70,8 +84,8 @@ const AdminOrderDetails = () => {
 
                                 <tbody>
                                     {orders.map((order) => (
-                                        <React.Fragment key={order.id}>
-                                            <tr className="border-b border-white/10 hover:bg-white/20 transition">
+                                        <>
+                                            <tr key={order.id} className="border-b border-white/10 hover:bg-white/20 transition">
                                                 <td className="p-4 font-semibold text-gray-800">{order.id}</td>
                                                 <td className="p-4 text-gray-700">{order.username}</td>
                                                 <td className="p-4 text-gray-700 text-sm">
@@ -86,11 +100,12 @@ const AdminOrderDetails = () => {
                                                     Rs. {order.totalAmount.toLocaleString()}
                                                 </td>
 
-                                                <td className="p-4">
+                                                <td className="p-4 flex items-center gap-3">
+
+                                                    {/* ▼ EXISTING VIEW/HIDE BUTTON (UNCHANGED) */}
                                                     <button
                                                         onClick={() => toggleExpand(order.id)}
                                                         className="inline-flex items-center gap-2 bg-gradient-to-r from-[#604a03ff] to-[#af8314ff] text-white px-4 py-2 rounded-lg hover:scale-105 transition"
-                                                        aria-label={`${expandedOrder === order.id ? 'Hide' : 'View'} items for order ${order.id}`}
                                                     >
                                                         {expandedOrder === order.id ? (
                                                             <>
@@ -104,6 +119,16 @@ const AdminOrderDetails = () => {
                                                             </>
                                                         )}
                                                     </button>
+
+                                                    {/* ⭐ NEW DELETE BUTTON */}
+                                                    <button
+                                                        onClick={() => handleDelete(order.id)}
+                                                        className="inline-flex items-center gap-2 bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 hover:scale-105 transition"
+                                                    >
+                                                        <Trash2 size={16} />
+                                                        Delete
+                                                    </button>
+
                                                 </td>
                                             </tr>
 
@@ -148,7 +173,7 @@ const AdminOrderDetails = () => {
                                                     </td>
                                                 </tr>
                                             )}
-                                        </React.Fragment>
+                                        </>
                                     ))}
                                 </tbody>
                             </table>
@@ -162,4 +187,4 @@ const AdminOrderDetails = () => {
     );
 };
 
-export default AdminOrderDetails;
+export default OrderDetails;

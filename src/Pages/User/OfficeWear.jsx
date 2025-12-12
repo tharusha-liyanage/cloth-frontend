@@ -37,7 +37,7 @@ const OfficeWear = () => {
             <h3 className="text-2xl font-serif text-center mb-8 text-[#af8314ff]">
                     Elegant, comfortable office wear designed to keep you confident and professional every day.            </h3>
 
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
                 {items.map((cloth) => (
                     <Card
                         key={cloth.id}

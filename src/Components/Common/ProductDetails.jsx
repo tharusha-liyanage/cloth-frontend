@@ -7,7 +7,7 @@ import axios from "axios";
 // Components
 import Navbar from "../Header&Footer/Navbar.jsx";
 import Footer from "../Header&Footer/Footer.jsx";
-
+import img1 from "../../assets/size_chart.jpg";
 // Cart Context
 import { useCart } from "../../contexts/CartContext";
 
@@ -22,7 +22,9 @@ const ProductDetails = () => {
   const [qty, setQty] = useState(1);
   const [showMiniCart, setShowMiniCart] = useState(false);
 
-  // FIX: use addItem from CartContext
+  // ⭐ NEW STATE
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
+
   const { addItem } = useCart();
 
   useEffect(() => {
@@ -52,7 +54,8 @@ const ProductDetails = () => {
     <div className="bg-[#fffff6ff]">
       <Navbar />
 
-      <div className="max-w-6xl mx-auto p-30 grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="max-w-6xl mx-auto bg-white grid grid-cols-1 md:grid-cols-2 gap-10 p-6 rounded-xl shadow-lg mt-20">
+
         {/* IMAGE */}
         <div>
           <img
@@ -63,7 +66,7 @@ const ProductDetails = () => {
         </div>
 
         {/* DETAILS */}
-        <div>
+        <div className="bg-white ">
           <h2 className="text-3xl font-bold mb-2">{item.clothName}</h2>
 
           <p className="text-2xl font-semibold text-gray-900 mb-4">
@@ -114,12 +117,13 @@ const ProductDetails = () => {
 
           {/* BUTTONS */}
           <div className="flex gap-4 mt-5">
-            <button className="border px-4 py-2 rounded flex items-center gap-2 hover:bg-gray-100">
-              📏 Size Guide
-            </button>
 
-            <button className="border px-4 py-2 rounded flex items-center gap-2 hover:bg-gray-100">
-              💬 Message
+            {/* ⭐ SIZE GUIDE BUTTON */}
+            <button
+              onClick={() => setShowSizeGuide(true)}
+              className="border px-4 py-2 rounded flex items-center gap-2 hover:bg-gray-100"
+            >
+              📏 Size Guide
             </button>
           </div>
 
@@ -146,7 +150,7 @@ const ProductDetails = () => {
             </div>
           )}
 
-          {/* ADD TO CART BUTTON */}
+          {/* ADD TO CART */}
           <button
             disabled={!selectedSize}
             onClick={() => {
@@ -171,7 +175,7 @@ const ProductDetails = () => {
             Add to Cart
           </button>
 
-          {/* MINI CART POPUP */}
+          {/* MINI CART */}
           {showMiniCart && (
             <div className="mt-3 text-sm text-green-700">
               Added to cart —
@@ -187,6 +191,34 @@ const ProductDetails = () => {
       </div>
 
       <Footer />
+
+      {/* ⭐ SIZE GUIDE POPUP MODAL */}
+      {showSizeGuide && (
+        <div
+          onClick={() => setShowSizeGuide(false)}
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full"
+          >
+            <h3 className="text-lg font-bold mb-3">Size Guide</h3>
+
+            <img
+              src={img1} // make sure file is inside public/
+              alt="Size Chart"
+              className="w-full rounded"
+            />
+
+            <button
+              onClick={() => setShowSizeGuide(false)}
+              className="mt-4 w-full py-2 bg-black text-white rounded hover:bg-gray-800"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

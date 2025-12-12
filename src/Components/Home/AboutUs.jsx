@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import img1 from '../../assets/about.png'
-
+import { useNavigate } from 'react-router-dom';
 const AboutUs = () => {
+  const navigate = useNavigate();
   // 1. Framer Motion Variants
   const imageVariants = {
     hidden: { opacity: 0, x: -100 },
@@ -90,6 +91,7 @@ const AboutUs = () => {
             viewport={{ once: true, amount: 0.5 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate(`/newArrival`)}
           >
             DISCOVER OUR New Collection
           </motion.button>
