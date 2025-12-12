@@ -37,7 +37,7 @@ const Denims = () => {
             <h3 className="text-2xl font-serif text-center mb-8 text-[#af8314ff]">
             Timeless denim designed for all-day comfort and effortless style.
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
                 {denimItems.map(item => (
                     <Card
                         key={item.id}

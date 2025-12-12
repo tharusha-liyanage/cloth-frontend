@@ -115,7 +115,7 @@ const Navbar = () => {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-[#023545] p-2 rounded-md hover:bg-white/40 transition"
+          className="md:hidden text-[#604a03ff] p-2 rounded-md hover:bg-white/40 transition"
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -123,13 +123,13 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#EAF4F6] px-6 pb-4 shadow-lg">
+        <div className="md:hidden bg-[#f6f2eaff] px-6 pb-4 shadow-lg">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
               onClick={() => setIsOpen(false)}
-              className="block py-2 text-[#023545] font-medium hover:text-indigo-600"
+              className="block py-2 text-[#604a03ff] font-medium hover:text-[#af8314ff] transition"
             >
               {link.name}
             </Link>
@@ -140,14 +140,14 @@ const Navbar = () => {
               <>
                 <button
                   onClick={handleProfileClick}
-                  className="block text-[#023545] mb-2 font-medium"
+                  className="block text-[#604a03ff] mb-2 font-medium"
                 >
                   <UserRound className="inline-block mr-2" size={18} />
                   {user.username}
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="w-full bg-[#023545] text-white px-4 py-2 rounded-2xl hover:opacity-90 transition"
+                  className="w-full bg-gradient-to-r from-[#604a03ff] to-[#af8314ff] text-white px-4 py-2 rounded-2xl hover:opacity-90 transition"
                 >
                   Logout
                 </button>
@@ -159,7 +159,7 @@ const Navbar = () => {
                     setIsOpen(false);
                     navigate("/login");
                   }}
-                  className="w-full bg-[#023545] text-white px-4 py-2 rounded-2xl hover:opacity-90 transition mb-2"
+                  className="w-full bg-gradient-to-r from-[#604a03ff] to-[#af8314ff] text-white px-4 py-2 rounded-2xl hover:opacity-90 transition mb-2"
                 >
                   Login
                 </button>
@@ -168,7 +168,7 @@ const Navbar = () => {
                     setIsOpen(false);
                     navigate("/signup");
                   }}
-                  className="w-full bg-white text-[#023545] border border-[#023545] px-4 py-2 rounded-2xl hover:bg-[#023545] hover:text-white transition"
+                  className="w-full bg-white text-[#604a03ff] border border-[#604a03ff] px-4 py-2 rounded-2xl hover:bg-[#604a03ff] hover:text-white transition"
                 >
                   Sign Up
                 </button>

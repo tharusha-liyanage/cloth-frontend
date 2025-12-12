@@ -38,7 +38,7 @@ const TopWear = () => {
             <h3 className="text-2xl font-serif text-center mb-8 text-[#af8314ff]">
                 Trendy and comfortable tops and t shirts designed to suit every style and occasion.            </h3>
             {/* Grid of Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
                 {topWearItems.map(item => (
                     <Card
                         key={item.id}
