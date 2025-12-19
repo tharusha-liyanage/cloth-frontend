@@ -12,7 +12,7 @@ const NewArrivalCarousel = () => {
   const scrollRef = useRef(null);
   const navigate = useNavigate();
   const { addItem } = useCart();
-  const [lastAddedId, setLastAddedId] = useState(null);
+  
 
   useEffect(() => {
     fetchClothes();
@@ -49,16 +49,16 @@ const NewArrivalCarousel = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* HEADER */}
-        <div className="flex justify-between items-center mb-8">
-          <div className="text-center flex-1">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+          <div className="text-center md:text-left flex-1">
             <h2 className="text-3xl md:text-4xl font-bold text-[#604a03ff]">New Arrivals</h2>
             <p className="text-[#af8314ff] text-lg md:text-xl mt-1">
               Check out the latest trends just in for the season.
             </p>
           </div>
 
-          {/* Arrow Buttons */}
-          <div className="hidden md:flex gap-2 ml-6">
+          {/* Arrow Buttons (Desktop only) */}
+          <div className="hidden md:flex gap-2 mt-4 md:mt-0">
             <button
               onClick={() => scroll("left")}
               className="p-2 rounded-full border border-gray-300 hover:bg-[#604a03ff] hover:text-white transition"
@@ -86,7 +86,7 @@ const NewArrivalCarousel = () => {
             clothes.map((item) => (
               <div
                 key={item.id}
-                className="min-w-[250px] sm:min-w-[280px] md:min-w-[300px] snap-start bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border border-gray-100"
+                className="min-w-[250px] sm:min-w-[280px] md:min-w-[300px] snap-start bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border border-gray-100 group"
               >
                 {/* IMAGE */}
                 <div className="relative h-[260px] sm:h-[300px] bg-gray-100 overflow-hidden">
@@ -101,26 +101,24 @@ const NewArrivalCarousel = () => {
                   />
 
                   {/* ADD TO CART BUTTON */}
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
                     <button
                       onClick={async () => {
-                        // If product has no sizes, redirect to product page to choose size
                         if (!item.sizes || item.sizes.length === 0) {
+                          // No size available — go to product page so user can select
                           navigate(`/product/${item.id}`);
                           return;
                         }
 
-                        const isLoggedIn = !!localStorage.getItem("token");
-
-                        // Use first available size as a sensible default for quick add
                         const selectedSize = item.sizes[0];
 
-                        await addItem({ id: item.id, size: selectedSize, qty: 1 });
-
-                        // Only show mini-confirmation if user is logged in
-                        if (isLoggedIn) {
-                          setLastAddedId(item.id);
-                          setTimeout(() => setLastAddedId(null), 2500);
+                        try {
+                          await addItem({ id: item.id, size: selectedSize, qty: 1 });
+                        } catch (err) {
+                          console.error("Add to cart failed:", err);
+                        } finally {
+                          // Redirect to product details so user sees the cloth details
+                          navigate(`/product/${item.id}`);
                         }
                       }}
                       className="bg-white text-black py-2.5 w-full rounded-lg text-sm font-semibold shadow-lg hover:bg-black hover:text-white transition flex items-center justify-center gap-2"
@@ -146,18 +144,8 @@ const NewArrivalCarousel = () => {
                       <div className="w-3 h-3 rounded-full bg-[#af8314ff]"></div>
                     </div>
                   </div>
-                  {/* MINI CONFIRMATION */}
-                  {lastAddedId === item.id && (
-                    <div className="mt-3 text-sm text-green-700">
-                      Added to cart —
-                      <button
-                        onClick={() => navigate("/cart")}
-                        className="underline ml-1"
-                      >
-                        View cart
-                      </button>
-                    </div>
-                  )}
+
+                  {/* (No inline confirmation — user is redirected to product details) */}
                 </div>
               </div>
             ))
