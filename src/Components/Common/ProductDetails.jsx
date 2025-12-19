@@ -50,6 +50,8 @@ const ProductDetails = () => {
     ? `${(currentStock / totalStock) * 100}%`
     : "0%";
 
+    const isLoggedIn = !!localStorage.getItem("token");
+
   return (
     <div className="bg-[#fffff6ff]">
       <Navbar />
@@ -176,17 +178,18 @@ const ProductDetails = () => {
           </button>
 
           {/* MINI CART */}
-          {showMiniCart && (
-            <div className="mt-3 text-sm text-green-700">
-              Added to cart —
-              <button
-                onClick={() => navigate("/cart")}
-                className="underline ml-1"
-              >
-                View cart
-              </button>
-            </div>
-          )}
+        {showMiniCart && isLoggedIn && (
+        <div className="mt-3 text-sm text-green-700">
+          Added to cart —
+          <button
+            onClick={() => navigate("/cart")}
+            className="underline ml-1"
+          >
+            View cart
+          </button>
+        </div>
+      )}
+
         </div>
       </div>
 

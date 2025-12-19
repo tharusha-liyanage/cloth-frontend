@@ -30,7 +30,7 @@ const HomeCarousel = () => {
   const current = slides[index];
 
   return (
-    <div className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden">
+    <div className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden mt-10">
 
       <AnimatePresence mode="wait">
         <motion.img
@@ -47,7 +47,7 @@ const HomeCarousel = () => {
       </AnimatePresence>
 
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 z-10"></div>
+      <div className="absolute inset-0 bg-black/20 z-10"></div>
 
       {/* TEXT CONTENT */}
       <div
