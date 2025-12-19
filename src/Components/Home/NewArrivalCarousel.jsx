@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../contexts/CartContext";
 
 const API_URL = "http://localhost:8080/api/clothes/allcloth";
 
@@ -10,6 +11,8 @@ const NewArrivalCarousel = () => {
   const [loading, setLoading] = useState(true);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
+  const { addItem } = useCart();
+  const [lastAddedId, setLastAddedId] = useState(null);
 
   useEffect(() => {
     fetchClothes();
@@ -100,7 +103,26 @@ const NewArrivalCarousel = () => {
                   {/* ADD TO CART BUTTON */}
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <button
-                      onClick={() => navigate(`/product/${item.id}`)}
+                      onClick={async () => {
+                        // If product has no sizes, redirect to product page to choose size
+                        if (!item.sizes || item.sizes.length === 0) {
+                          navigate(`/product/${item.id}`);
+                          return;
+                        }
+
+                        const isLoggedIn = !!localStorage.getItem("token");
+
+                        // Use first available size as a sensible default for quick add
+                        const selectedSize = item.sizes[0];
+
+                        await addItem({ id: item.id, size: selectedSize, qty: 1 });
+
+                        // Only show mini-confirmation if user is logged in
+                        if (isLoggedIn) {
+                          setLastAddedId(item.id);
+                          setTimeout(() => setLastAddedId(null), 2500);
+                        }
+                      }}
                       className="bg-white text-black py-2.5 w-full rounded-lg text-sm font-semibold shadow-lg hover:bg-black hover:text-white transition flex items-center justify-center gap-2"
                     >
                       <ShoppingCart size={18} /> Add to Cart
@@ -124,6 +146,18 @@ const NewArrivalCarousel = () => {
                       <div className="w-3 h-3 rounded-full bg-[#af8314ff]"></div>
                     </div>
                   </div>
+                  {/* MINI CONFIRMATION */}
+                  {lastAddedId === item.id && (
+                    <div className="mt-3 text-sm text-green-700">
+                      Added to cart —
+                      <button
+                        onClick={() => navigate("/cart")}
+                        className="underline ml-1"
+                      >
+                        View cart
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))

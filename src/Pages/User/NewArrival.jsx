@@ -21,35 +21,58 @@ const NewArrival = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <Navbar/>
+       <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+  <Navbar />
 
-            <div className="px-4 sm:px-6 lg:px-20 py-10 flex-1 mt-20">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-[#023545]">
-                    New Arrivals
-                </h2>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-center mb-10 text-[#af8314ff]">
-                    New season, new styles. Explore our newest collection designed to keep your wardrobe updated.
-                </h3>
+  {/* ✅ Navbar spacer */}
+  <div className="h-[76px] md:h-[72px]" />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
-                {clothes.map((item) => (
-                    <Card
-                        key={item.id}
-                        id={item.id}  
-                        imageUrl={item.imageUrl}
-                        title={item.clothName}
-                        price={item.price}
-                        sizes={item.sizes || []}
-                    />
-                ))}
-            </div>
+  <div className="
+    w-full
+    max-w-7xl
+    mx-auto
+    px-4
+    sm:px-6
+    md:px-8
+    lg:px-12
+    py-10
+    flex-1
+  ">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-[#023545]">
+      New Arrivals
+    </h2>
+
+    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-serif text-center mb-8 text-[#af8314ff] max-w-3xl mx-auto">
+      New season, new styles. Explore our newest collection designed to keep your wardrobe updated.
+    </h3>
+
+    {/* ✅ Grid with controlled widths */}
+    <div className="
+      grid
+      grid-cols-1
+      min-[540px]:grid-cols-2
+      md:grid-cols-2
+      lg:grid-cols-3
+      xl:grid-cols-4
+      gap-6
+    ">
+      {clothes.map((item) => (
+        <Card
+          key={item.id}
+          id={item.id}
+          imageUrl={item.imageUrl}
+          title={item.clothName}
+          price={item.price}
+          sizes={item.sizes || []}
+        />
+      ))}
+    </div>
+  </div>
+
+  <Footer />
+</div>
 
 
-            </div>
-
-            <Footer/>
-        </div>
     );
 };
 
